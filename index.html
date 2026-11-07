@@ -75,10 +75,11 @@ figure{margin:0}
 .photos img{display:block;width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px}
 .photos .wide{grid-column:span 2}
 .photos .wide img{aspect-ratio:auto;height:auto}
-.founder{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center}
+.founder{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start}
 .founder > *{min-width:0}
 .video{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:6px;overflow:hidden;background:var(--raise);border:1px solid var(--line)}
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (min-width:821px){.founder .video{position:sticky;top:96px}}
 @media (max-width:820px){.founder{grid-template-columns:1fr;gap:28px}}
 .banner img{display:block;width:100%;height:auto;aspect-ratio:1800/841;object-fit:cover;border-radius:6px}
 @media (max-width:560px){.banner img{aspect-ratio:3/2}}
@@ -362,7 +363,14 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
       <div class="head">
         <p class="eyebrow"><span class="en">Meet our founder</span><span class="es">Conoce a nuestro fundador</span></p>
         <h2>Miguel Arana</h2>
-        <p class="lede"><span class="en">Miguel is an aerial and circus performer who founded Ares Entertainment to bring circus programs to hotels, resorts and camps. In this interview with Allison Miller of Camp Shopping Channel, he explains how a program works and why it matters for your guests and campers.</span><span class="es">Miguel es artista aéreo y de circo, y fundó Ares Entertainment para llevar programas de circo a hoteles, resorts y campamentos. En esta entrevista con Allison Miller de Camp Shopping Channel, explica cómo funciona un programa y por qué es importante para tus huéspedes y campistas.</span></p>
+        <p class="lede"><span class="en">Miguel is a circus artist, instructor and show producer with more than a decade in all-inclusive resorts and summer camps. He founded Ares Entertainment to give hotels and camps the same kind of program he built for Club Med.</span><span class="es">Miguel es artista de circo, instructor y productor de shows, con más de una década en resorts todo incluido y campamentos de verano. Fundó Ares Entertainment para ofrecer a hoteles y campamentos el mismo tipo de programa que creó para Club Med.</span></p>
+        <ul class="list">
+          <li><div><strong><span class="en">Club Med Turks &amp; Caicos</span><span class="es">Club Med Turks y Caicos</span></strong><span><span class="en">Entertainment Manager and Circus Director at Club Med Turquoise.</span><span class="es">Gerente de entretenimiento y director de circo en Club Med Turquoise.</span></span></div></li>
+          <li><div><strong><span class="en">Club Med Greater China</span><span class="es">Club Med Gran China</span></strong><span><span class="en">Circus expert who helped design the recreation areas at Club Med Joyview Yanqing–Beijing, including an indoor flying trapeze, and trained entertainment teams across China.</span><span class="es">Experto en circo que ayudó a diseñar las áreas recreativas de Club Med Joyview Yanqing–Beijing, incluido un trapecio de vuelo bajo techo, y capacitó equipos de entretenimiento en toda China.</span></span></div></li>
+          <li><div><strong><span class="en">Flying trapeze in China and the Caribbean</span><span class="es">Trapecio de vuelo en China y el Caribe</span></strong><span><span class="en">General Manager of I.Fly Trapeze in China, and founder of a flying trapeze school in the Dominican Republic.</span><span class="es">Gerente general de I.Fly Trapeze en China y fundador de una escuela de trapecio de vuelo en República Dominicana.</span></span></div></li>
+          <li><div><strong><span class="en">Camps and schools</span><span class="es">Campamentos y escuelas</span></strong><span><span class="en">Circus instructor at US summer camps and private circus schools, and in community programs in Venezuela.</span><span class="es">Instructor de circo en campamentos de verano y escuelas privadas de circo en EE. UU., y en programas comunitarios en Venezuela.</span></span></div></li>
+        </ul>
+        <p class="note"><span class="en">Speaks Spanish, English, French and German.</span><span class="es">Habla español, inglés, francés y alemán.</span></p>
         <p class="note"><span class="en">Interview in English.</span><span class="es">Entrevista en inglés.</span></p>
       </div>
     </div>
