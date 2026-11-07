@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ares Entertainment</title>
+<meta name="description" content="Ares Entertainment designs, installs and trains turnkey circus and aerial programs for hotels, resorts and summer camps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a night-show stage. Full-width bands, one rig drawing in the hero, spec tables set like a rigging sheet. */
+:root{
+  --bg:#0e1320; --surface:#161d2d; --raise:#1d2639; --fg:#f2ede4; --muted:#a7adbb;
+  --line:#2a3449; --gold:#e3aa3c; --gold-ink:#1a1206; --red:#de4b3c;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f2f4f7; --surface:#ffffff; --raise:#e8ecf2; --fg:#131a27; --muted:#56607a;
+  --line:#d3d9e3; --gold:#9c6512; --gold-ink:#ffffff; --red:#b5352a; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f2f4f7; --surface:#ffffff; --raise:#e8ecf2; --fg:#131a27; --muted:#56607a;
+  --line:#d3d9e3; --gold:#9c6512; --gold-ink:#ffffff; --red:#b5352a; color-scheme:light}
+
+html[data-lang="en"] .es, html[data-lang="es"] .en{display:none!important}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font:400 1.0625rem/1.6 var(--body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:.95;letter-spacing:.005em;text-wrap:balance;margin:0;text-transform:uppercase}
+h1{font-size:clamp(3rem,9vw,6.5rem)}
+h2{font-size:clamp(2.25rem,5.5vw,3.75rem)}
+h3{font-size:1.65rem;font-weight:600;line-height:1.05}
+p{margin:0;max-width:62ch}
+.eyebrow{font:500 .78rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.lede{font-size:1.2rem;color:var(--muted)}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:24px;padding-block:14px}
+.mark{font:800 1.5rem/1 var(--display);letter-spacing:.06em;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.mark span{color:var(--gold)}
+nav{display:flex;gap:22px;margin-left:auto}
+nav a{text-decoration:none;font-size:.95rem;color:var(--muted)}
+nav a:hover{color:var(--fg)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;flex:none}
+.lang button{font:500 .78rem/1 var(--mono);letter-spacing:.08em;background:none;color:var(--muted);border:0;padding:8px 11px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink)}
+@media (max-width:820px){nav{display:none}.lang{margin-left:auto}header .wrap{gap:12px}}
+@media (max-width:420px){.mark{font-size:1.2rem;letter-spacing:.03em}}
+
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 1rem/1 var(--body);padding:15px 22px;border-radius:999px;text-decoration:none;border:1px solid var(--gold);cursor:pointer}
+.btn.solid{background:var(--gold);color:var(--gold-ink)}
+.btn.ghost{background:none;color:var(--fg);border-color:var(--line)}
+.btn:hover{filter:brightness(1.08)}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center;padding-block:72px 56px}
+.hero-copy{display:flex;flex-direction:column;gap:24px;min-width:0}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+figure{margin:0}
+.hero-photo{position:relative;justify-self:stretch;max-width:100%}
+.hero-photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 30%;border-radius:6px}
+.hero-photo::after{content:"";position:absolute;left:-14px;bottom:-14px;width:46%;height:46%;border-left:3px solid var(--gold);border-bottom:3px solid var(--gold);border-bottom-left-radius:8px;pointer-events:none}
+@media (max-width:760px){.hero .wrap{grid-template-columns:1fr;padding-block:40px 48px}.hero-photo{order:-1}.hero-photo img{aspect-ratio:4/3}.hero-photo::after{display:none}}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.photos img{display:block;width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px}
+.photos .wide{grid-column:span 2}
+.photos .wide img{aspect-ratio:auto;height:auto}
+.banner img{display:block;width:100%;height:auto;aspect-ratio:1800/841;object-fit:cover;border-radius:6px}
+@media (max-width:560px){.banner img{aspect-ratio:3/2}}
+@media (max-width:760px){.photos{grid-template-columns:1fr 1fr}.photos .wide{grid-column:1/-1}.photos .wide img{aspect-ratio:16/9}}
+
+/* proof strip */
+.proof{border-block:1px solid var(--line);background:var(--surface)}
+.proof .wrap{display:flex;flex-wrap:wrap;gap:12px 40px;align-items:baseline;padding-block:22px}
+.proof b{font:600 1.35rem/1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.proof .eyebrow{color:var(--muted)}
+
+section.band .wrap{padding-block:88px;display:flex;flex-direction:column;gap:40px}
+.head{display:flex;flex-direction:column;gap:16px}
+.alt{background:var(--surface)}
+
+/* two-column offer */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.split > *{min-width:0}
+@media (max-width:760px){.split{grid-template-columns:1fr;gap:32px}}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.list li{display:grid;grid-template-columns:auto 1fr;gap:14px;padding-block:16px;border-top:1px solid var(--line)}
+.list li:last-child{border-bottom:1px solid var(--line)}
+.list li::before{content:"";width:9px;height:9px;margin-top:9px;background:var(--gold);transform:rotate(45deg)}
+.list strong{display:block;font-weight:600}
+.list span{color:var(--muted)}
+
+/* steps (a real sequence) */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.steps li{background:var(--bg);padding:24px;display:flex;flex-direction:column;gap:8px}
+.alt .steps li{background:var(--surface)}
+.steps .n{font:500 .8rem/1 var(--mono);color:var(--gold);letter-spacing:.1em}
+.steps p{color:var(--muted);font-size:.98rem}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* programs */
+.programs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.program{border:1px solid var(--line);border-radius:6px;padding:28px;display:flex;flex-direction:column;gap:14px;background:var(--bg)}
+.program.feature{border-color:var(--gold)}
+.program .tag{font:500 .75rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.program p{color:var(--muted);font-size:.98rem}
+.program .price{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font:500 .85rem/1.3 var(--mono);color:var(--gold)}
+@media (max-width:860px){.programs{grid-template-columns:1fr}}
+.note{font-size:.95rem;color:var(--muted)}
+
+/* rigging sheet */
+.sheet{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.98rem}
+th,td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--line)}
+th{font:500 .74rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--raise)}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td small{color:var(--muted);font-family:var(--mono);font-size:.8rem}
+.spec{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.spec div{background:var(--surface);padding:22px;display:flex;flex-direction:column;gap:6px}
+.spec b{font:800 2.4rem/1 var(--display);font-variant-numeric:tabular-nums}
+.spec span{font:500 .74rem/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:560px){.spec{grid-template-columns:1fr}}
+
+/* shows */
+.acts{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
+.acts li{font:600 1.15rem/1 var(--display);letter-spacing:.06em;text-transform:uppercase;padding:12px 16px;border:1px solid var(--line);border-radius:999px}
+
+/* contact */
+.contact{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px}
+.contact > *{min-width:0}
+@media (max-width:820px){.contact{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column;gap:18px}
+.line{display:flex;flex-direction:column;gap:4px}
+.line .eyebrow{color:var(--muted)}
+.line .v{font:500 1.1rem/1.3 var(--mono);user-select:all}
+form{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:28px}
+form .full{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:6px;font-size:.9rem;color:var(--muted)}
+input,select,textarea{font:400 1rem/1.4 var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:12px;width:100%}
+textarea{min-height:120px;resize:vertical}
+#sent{color:var(--gold);font-weight:500}
+@media (max-width:520px){form{grid-template-columns:1fr;padding:20px}}
+
+footer{border-top:1px solid var(--line)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;padding-block:28px;color:var(--muted);font-size:.9rem}
+</style>
+<meta property="og:title" content="Ares Entertainment">
+<meta property="og:description" content="Turnkey circus and aerial programs for hotels, resorts and summer camps.">
+<meta property="og:image" content="https://aresentertainment.com/img/duo-beach.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e1320'/%3E%3Cpath d='M7 27L13 5M25 27L19 5M11 6H21' stroke='%23e3aa3c' stroke-width='2.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="mark" href="#top">Ares <span>Entertainment</span></a>
+    <nav aria-label="Main">
+      <a href="#hotels"><span class="en">Hotels &amp; Resorts</span><span class="es">Hoteles y resorts</span></a>
+      <a href="#camps"><span class="en">Summer Camps</span><span class="es">Campamentos</span></a>
+      <a href="#activities"><span class="en">Activities</span><span class="es">Actividades</span></a>
+      <a href="#shows"><span class="en">Shows</span><span class="es">Shows</span></a>
+      <a href="#contact"><span class="en">Contact</span><span class="es">Contacto</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="lang-en" data-set="en" aria-pressed="true">EN</button>
+      <button type="button" id="lang-es" data-set="es" aria-pressed="false">ES</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="en">Turnkey circus and aerial programs</span><span class="es">Programas de circo y aéreos llave en mano</span></p>
+      <h1><span class="en">Bring the circus <em>to your venue</em></span><span class="es">Lleva el circo <em>a tu espacio</em></span></h1>
+      <p class="lede"><span class="en">We design, install and train circus programs for hotels, resorts and summer camps. You get the structures, the equipment, a trained team and the safety procedures, and your guests get something they will remember.</span><span class="es">Diseñamos, instalamos y capacitamos programas de circo para hoteles, resorts y campamentos de verano. Tú recibes las estructuras, el equipo, un equipo capacitado y los procedimientos de seguridad, y tus huéspedes viven algo que van a recordar.</span></p>
+      <div class="ctas">
+        <a class="btn solid" href="https://calendar.app.google/Z9CcoSQE1W57XBmMA" target="_blank" rel="noopener"><span class="en">Book a call</span><span class="es">Agenda una llamada</span></a>
+        <a class="btn ghost" href="https://www.youtube.com/watch?v=GZs2b3kycds" target="_blank" rel="noopener"><span class="en">Watch our video</span><span class="es">Mira nuestro video</span></a>
+      </div>
+    </div>
+    <figure class="hero-photo"><img src="img/duo-beach.jpg" width="1400" height="2087" alt="Two acrobats performing a hand-to-hand aerial act on a beach rig under palm trees"></figure>
+  </div>
+</section>
+
+<div class="proof">
+  <div class="wrap">
+    <span class="eyebrow"><span class="en">Programs built for</span><span class="es">Programas creados para</span></span>
+    <b>Club Med</b><b>Viva Wyndham</b><b>Camp Cayuga</b>
+    <span class="eyebrow"><span class="en">USA · Dominican Republic · China · Hong Kong</span><span class="es">EE. UU. · República Dominicana · China · Hong Kong</span></span>
+  </div>
+</div>
+
+<section class="band" id="hotels">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="en">Hotels &amp; Resorts</span><span class="es">Hoteles y resorts</span></p>
+      <h2><span class="en">A circus school inside your resort</span><span class="es">Una escuela de circo dentro de tu resort</span></h2>
+      <p class="lede"><span class="en">We set up portable aerial structures in an open area of your property and run classes for guests from age 4. Families get an activity they can't find at home, and adults train alongside their kids.</span><span class="es">Instalamos estructuras aéreas portátiles en un área abierta de tu propiedad y ofrecemos clases para huéspedes desde los 4 años. Las familias encuentran una actividad que no tienen en casa, y los adultos entrenan junto a sus hijos.</span></p>
+    </div>
+    <div class="photos">
+      <figure><img src="img/resort-rope-guests.jpg" width="1100" height="1393" loading="lazy" alt="Resort guests watching an aerial rope act on a beach rig by the sea"></figure>
+      <figure><img src="img/pole-beach.jpg" width="1100" height="1650" loading="lazy" alt="Acrobat on an aerial pole rig on the beach"></figure>
+      <figure><img src="img/resort-rope-guests-2.jpg" width="1100" height="1375" loading="lazy" alt="Families watching an aerial rope performance at a beachfront resort"></figure>
+    </div>
+    <div class="split">
+      <div>
+        <h3 style="margin-bottom:16px"><span class="en">What we provide</span><span class="es">Qué incluye</span></h3>
+        <ul class="list">
+          <li><div><strong><span class="en">A tailored program</span><span class="es">Un programa a la medida</span></strong><span><span class="en">Activities chosen for your space, your guests and your schedule.</span><span class="es">Actividades elegidas para tu espacio, tus huéspedes y tu horario.</span></span></div></li>
+          <li><div><strong><span class="en">Structures and equipment</span><span class="es">Estructuras y equipo</span></strong><span><span class="en">Self-standing rigs and professional aerial apparatus, installed by us.</span><span class="es">Estructuras autoportantes y aparatos aéreos profesionales, instalados por nosotros.</span></span></div></li>
+          <li><div><strong><span class="en">Hiring and staff training</span><span class="es">Contratación y capacitación</span></strong><span><span class="en">We help you hire your team and train them to teach, or to perform.</span><span class="es">Te ayudamos a contratar a tu equipo y lo capacitamos para enseñar o para presentarse.</span></span></div></li>
+          <li><div><strong><span class="en">Safety and operating procedures</span><span class="es">Seguridad y procedimientos</span></strong><span><span class="en">Written procedures for every activity, from setup to daily checks.</span><span class="es">Procedimientos escritos para cada actividad, desde el montaje hasta las revisiones diarias.</span></span></div></li>
+          <li><div><strong><span class="en">Support throughout</span><span class="es">Acompañamiento constante</span></strong><span><span class="en">Advice and follow-up for as long as the program runs.</span><span class="es">Asesoría y seguimiento mientras el programa esté en marcha.</span></span></div></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:16px"><span class="en">How it works</span><span class="es">Cómo funciona</span></h3>
+        <ol class="steps" style="grid-template-columns:1fr 1fr">
+          <li><span class="n">01</span><strong><span class="en">Site review</span><span class="es">Visita al sitio</span></strong><p><span class="en">We look at your space and guests.</span><span class="es">Evaluamos tu espacio y tus huéspedes.</span></p></li>
+          <li><span class="n">02</span><strong><span class="en">Program design</span><span class="es">Diseño del programa</span></strong><p><span class="en">We choose activities and structures.</span><span class="es">Elegimos actividades y estructuras.</span></p></li>
+          <li><span class="n">03</span><strong><span class="en">Installation</span><span class="es">Instalación</span></strong><p><span class="en">We set up and test the equipment.</span><span class="es">Montamos y probamos el equipo.</span></p></li>
+          <li><span class="n">04</span><strong><span class="en">Training</span><span class="es">Capacitación</span></strong><p><span class="en">Your team learns to run it safely.</span><span class="es">Tu equipo aprende a operarlo con seguridad.</span></p></li>
+          <li><span class="n">05</span><strong><span class="en">First month on site</span><span class="es">Primer mes en sitio</span></strong><p><span class="en">We stay to support opening.</span><span class="es">Te acompañamos en la apertura.</span></p></li>
+          <li><span class="n">06</span><strong><span class="en">Six-month inspection</span><span class="es">Inspección a los seis meses</span></strong><p><span class="en">We come back to check everything.</span><span class="es">Volvemos para revisarlo todo.</span></p></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="camps">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="en">Summer Camps · 2027 season</span><span class="es">Campamentos de verano · temporada 2027</span></p>
+      <h2><span class="en">Three ways to add circus to camp</span><span class="es">Tres formas de sumar el circo a tu campamento</span></h2>
+      <p class="lede"><span class="en">Every program includes professional equipment, staff training and support, and campers work toward a show for the whole camp. Each one adapts to your space, enrollment and schedule, and you can rent or buy.</span><span class="es">Cada programa incluye equipo profesional, capacitación del personal y acompañamiento, y los campistas preparan un show para todo el campamento. Cada uno se adapta a tu espacio, inscripciones y horario, y puedes alquilar o comprar.</span></p>
+    </div>
+    <div class="photos">
+      <figure class="wide"><img src="img/camp-trapeze.jpg" width="1800" height="996" loading="lazy" alt="Aerial view of a summer camp field with a flying trapeze rig, safety net and aerial frames"></figure>
+      <figure><img src="img/camp-aframe.jpg" width="1100" height="949" loading="lazy" alt="Camper on an aerial apparatus hanging from an A-frame rig on a lawn, with a crash mat below"></figure>
+    </div>
+    <div class="programs">
+      <article class="program">
+        <span class="tag"><span class="en">Start here</span><span class="es">Para empezar</span></span>
+        <h3><span class="en">Aerial Program</span><span class="es">Programa Aéreo</span></h3>
+        <p><span class="en">Aerial apparatus on a self-standing structure, with training for your staff.</span><span class="es">Aparatos aéreos sobre una estructura autoportante, con capacitación para tu personal.</span></p>
+        <span class="price"><span class="en">Pricing on request</span><span class="es">Precio a consultar</span></span>
+      </article>
+      <article class="program">
+        <span class="tag"><span class="en">Most versatile</span><span class="es">El más versátil</span></span>
+        <h3><span class="en">Mini-Trapeze &amp; Aerials</span><span class="es">Mini trapecio y aéreos</span></h3>
+        <p><span class="en">Adds a mini trapeze to the aerial program for more campers at once.</span><span class="es">Suma un mini trapecio al programa aéreo para atender a más campistas a la vez.</span></p>
+        <span class="price"><span class="en">Pricing on request</span><span class="es">Precio a consultar</span></span>
+      </article>
+      <article class="program feature">
+        <span class="tag"><span class="en">Full program</span><span class="es">Programa completo</span></span>
+        <h3><span class="en">Trapeze &amp; Aerials</span><span class="es">Trapecio y aéreos</span></h3>
+        <p><span class="en">Our complete program, with full trapeze and aerials as a signature camp activity.</span><span class="es">Nuestro programa completo, con trapecio y aéreos como actividad insignia del campamento.</span></p>
+        <span class="price"><span class="en">Pricing on request</span><span class="es">Precio a consultar</span></span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="activities">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="en">Activities</span><span class="es">Actividades</span></p>
+      <h2><span class="en">Something for every guest</span><span class="es">Algo para cada huésped</span></h2>
+      <p class="lede"><span class="en">A typical menu. The final list depends on your space and the structures we install.</span><span class="es">Un menú típico. La lista final depende de tu espacio y de las estructuras que instalemos.</span></p>
+    </div>
+    <figure class="banner"><img src="img/duo-straps-wide.jpg" width="1800" height="841" loading="lazy" alt="Two acrobats in a horizontal straps balance on a beach rig"></figure>
+    <div class="sheet">
+      <table>
+        <thead><tr>
+          <th><span class="en">Activity</span><span class="es">Actividad</span></th>
+          <th><span class="en">Equipment</span><span class="es">Equipo</span></th>
+          <th><span class="en">Lesson</span><span class="es">Clase</span></th>
+          <th><span class="en">Min. age</span><span class="es">Edad mín.</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td><span class="en">Lyra</span><span class="es">Aro aéreo</span></td><td><span class="en">Aerial hoop on rig</span><span class="es">Aro aéreo en estructura</span></td><td class="num">30 min</td><td class="num">8+</td></tr>
+          <tr><td><span class="en">Single trapeze</span><span class="es">Trapecio fijo</span></td><td><span class="en">Trapeze bar on rig</span><span class="es">Barra de trapecio en estructura</span></td><td class="num">30 min</td><td class="num">8+</td></tr>
+          <tr><td><span class="en">Silks &amp; hammock</span><span class="es">Telas y hamaca</span></td><td><span class="en">Aerial silks, hammock</span><span class="es">Telas aéreas, hamaca</span></td><td class="num">30 min</td><td class="num">4+</td></tr>
+          <tr><td><span class="en">Juggling</span><span class="es">Malabares</span></td><td><span class="en">Balls, clubs, hats, spinning plates</span><span class="es">Pelotas, clavas, sombreros, platos chinos</span></td><td class="num">30 min</td><td class="num">8+</td></tr>
+          <tr><td><span class="en">Balance</span><span class="es">Equilibrio</span></td><td><span class="en">Balance ball, unicycle</span><span class="es">Bola de equilibrio, monociclo</span></td><td class="num">30 min</td><td class="num">4+</td></tr>
+          <tr><td><span class="en">Mini trampoline</span><span class="es">Mini trampolín</span></td><td><span class="en">Mini trampoline, challenge props</span><span class="es">Mini trampolín, accesorios</span></td><td class="num">30 min</td><td class="num">8+ <small>≤100 kg</small></td></tr>
+          <tr><td><span class="en">Bungee bounce</span><span class="es">Bungee</span></td><td><span class="en">Rig, trampoline bed, bungee cords</span><span class="es">Estructura, cama elástica, cuerdas bungee</span></td><td class="num">45 min</td><td class="num">4+ <small>≤70 kg</small></td></tr>
+          <tr><td><span class="en">Stilt walking</span><span class="es">Zancos</span></td><td><span class="en">Stilts</span><span class="es">Zancos</span></td><td class="num">30 min</td><td class="num">11+</td></tr>
+          <tr><td><span class="en">Face and mask painting</span><span class="es">Maquillaje y máscaras</span></td><td><span class="en">Paint, card, craft materials</span><span class="es">Pintura, cartón, materiales de manualidades</span></td><td class="num">30 min</td><td class="num">3+</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="head" style="gap:14px">
+      <h3><span class="en">The structure</span><span class="es">La estructura</span></h3>
+      <p class="note"><span class="en">Our certified aluminum self-standing rig needs no ceiling or anchor points, so it can go on a lawn, a beach or a plaza.</span><span class="es">Nuestra estructura autoportante de aluminio, certificada, no necesita techo ni puntos de anclaje, así que puede ir en un jardín, una playa o una plaza.</span></p>
+    </div>
+    <div class="spec">
+      <div><b>5.2 m</b><span><span class="en">Height at full extension</span><span class="es">Altura máxima</span></span></div>
+      <div><b>7.7 × 6.6 m</b><span><span class="en">Footprint</span><span class="es">Área que ocupa</span></span></div>
+      <div><b>180 kg</b><span><span class="en">Working load limit</span><span class="es">Carga de trabajo máxima</span></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="shows">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><span class="en">Shows</span><span class="es">Shows</span></p>
+      <h2><span class="en">Want a show too?</span><span class="es">¿También quieres un show?</span></h2>
+      <p class="lede"><span class="en">We can train your team to perform as well as teach, so evenings end with a show your guests watched being built all week.</span><span class="es">Podemos capacitar a tu equipo para presentarse además de enseñar, para que las noches terminen con un show que tus huéspedes vieron prepararse toda la semana.</span></p>
+    </div>
+    <div class="photos">
+      <figure><img src="img/show-straps-night.jpg" width="1000" height="1778" loading="lazy" alt="Night aerial straps show on a freestanding rig in front of a crowd"></figure>
+      <figure><img src="img/show-silks-duo.jpg" width="1000" height="1778" loading="lazy" alt="Duo act on red aerial silks during an outdoor night show"></figure>
+      <figure><img src="img/show-straps-crowd.jpg" width="1000" height="1778" loading="lazy" alt="Audience filming an aerial straps performance at night"></figure>
+    </div>
+    <ul class="acts">
+      <li><span class="en">Aerial silks</span><span class="es">Telas</span></li>
+      <li><span class="en">Lyra</span><span class="es">Aro aéreo</span></li>
+      <li><span class="en">Straps</span><span class="es">Straps</span></li>
+      <li><span class="en">Single trapeze</span><span class="es">Trapecio fijo</span></li>
+      <li><span class="en">Double trapeze</span><span class="es">Trapecio doble</span></li>
+      <li><span class="en">Triple trapeze</span><span class="es">Trapecio triple</span></li>
+      <li><span class="en">Spanish web</span><span class="es">Cuerda española</span></li>
+      <li><span class="en">Tumbling</span><span class="es">Acrobacia de piso</span></li>
+      <li><span class="en">Juggling</span><span class="es">Malabares</span></li>
+      <li><span class="en">Diabolo</span><span class="es">Diábolo</span></li>
+      <li><span class="en">Hula hoop</span><span class="es">Hula hoop</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="band" id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div class="card">
+        <p class="eyebrow"><span class="en">Contact</span><span class="es">Contacto</span></p>
+        <h2><span class="en">Let's plan your program</span><span class="es">Planeemos tu programa</span></h2>
+        <p class="lede"><span class="en">Tell us about your venue and we'll suggest what fits your space.</span><span class="es">Cuéntanos sobre tu espacio y te sugerimos lo que mejor encaja.</span></p>
+        <div class="line"><span class="eyebrow">Miguel Arana · <span class="en">Operations Director</span><span class="es">Director de operaciones</span></span></div>
+        <div class="line"><span class="eyebrow"><span class="en">Phone</span><span class="es">Teléfono</span></span><span class="v">+1 570-228-1769</span><span class="v">+1 516-860-0286</span></div>
+        <div class="line"><span class="eyebrow"><span class="en">Email</span><span class="es">Correo</span></span><span class="v">info@aresentertainment.com</span></div>
+        <div><a class="btn solid" href="https://calendar.app.google/Z9CcoSQE1W57XBmMA" target="_blank" rel="noopener"><span class="en">Book a call</span><span class="es">Agenda una llamada</span></a></div>
+      </div>
+      <form id="inquiry" name="inquiry" method="POST" action="https://formsubmit.co/info@aresentertainment.com" novalidate>
+        <input type="hidden" name="_subject" value="New inquiry from aresentertainment.com"><input type="hidden" name="_template" value="table"><input type="hidden" name="_next" value="https://aresentertainment.com/thanks.html"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <label><span class="en">Your name</span><span class="es">Tu nombre</span><input id="f-name" name="name" required autocomplete="name"></label>
+        <label><span class="en">Email</span><span class="es">Correo</span><input id="f-email" name="email" type="email" required autocomplete="email"></label>
+        <label><span class="en">Venue name</span><span class="es">Nombre del lugar</span><input id="f-venue" name="venue"></label>
+        <label><span class="en">Type of venue</span><span class="es">Tipo de lugar</span>
+          <select id="f-type" name="type">
+            <option value="hotel">Hotel / Resort</option>
+            <option value="camp">Summer camp / Campamento</option>
+            <option value="other">Other / Otro</option>
+          </select></label>
+        <label class="full"><span class="en">Location</span><span class="es">Ubicación</span><input id="f-location" name="location" placeholder="City, country"></label>
+        <label class="full"><span class="en">Tell us about your space and guests</span><span class="es">Cuéntanos sobre tu espacio y tus huéspedes</span><textarea id="f-message" name="message"></textarea></label>
+        <div class="full ctas" style="align-items:center">
+          <button class="btn solid" type="submit"><span class="en">Send inquiry</span><span class="es">Enviar consulta</span></button>
+          <span id="sent" role="status" hidden></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Ares Entertainment LLC · Florida, USA</span>
+    <span><span class="en">Circus and aerial programs for hotels, resorts and camps</span><span class="es">Programas de circo y aéreos para hoteles, resorts y campamentos</span></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  function setLang(l){
+    root.setAttribute('data-lang',l); root.lang=l;
+    document.querySelectorAll('.lang button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===l))});
+    try{localStorage.setItem('ares-lang',l)}catch(e){}
+  }
+  var saved=null; try{saved=localStorage.getItem('ares-lang')}catch(e){}
+  setLang(saved==='es'||saved==='en'?saved:((navigator.language||'').slice(0,2)==='es'?'es':'en'));
+  document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.set)})});
+  var f=document.getElementById('inquiry'), s=document.getElementById('sent');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var es=root.getAttribute('data-lang')==='es';
+    var n=document.getElementById('f-name'), m=document.getElementById('f-email');
+    if(!n.value.trim()||!m.checkValidity()||!m.value){s.textContent=es?'Escribe tu nombre y un correo válido.':'Please add your name and a valid email.';s.hidden=false;return}
+    var data=new URLSearchParams(new FormData(f)).toString();
+    fetch('https://formsubmit.co/ajax/info@aresentertainment.com',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/json'},body:data}).then(function(r){
+      if(!r.ok) throw 0;
+      s.textContent=es?'Gracias. Te responderemos pronto.':'Thanks. We will be in touch soon.';s.hidden=false;f.reset();
+    }).catch(function(){s.textContent=es?'No se pudo enviar. Escríbenos a info@aresentertainment.com.':'Could not send. Please email info@aresentertainment.com.';s.hidden=false;});
+  });
+})();
+</script>
+
+</body>
+</html>
