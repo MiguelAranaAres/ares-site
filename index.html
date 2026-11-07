@@ -75,6 +75,11 @@ figure{margin:0}
 .photos img{display:block;width:100%;height:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px}
 .photos .wide{grid-column:span 2}
 .photos .wide img{aspect-ratio:auto;height:auto}
+.founder{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center}
+.founder > *{min-width:0}
+.video{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:6px;overflow:hidden;background:var(--raise);border:1px solid var(--line)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:820px){.founder{grid-template-columns:1fr;gap:28px}}
 .banner img{display:block;width:100%;height:auto;aspect-ratio:1800/841;object-fit:cover;border-radius:6px}
 @media (max-width:560px){.banner img{aspect-ratio:3/2}}
 @media (max-width:760px){.photos{grid-template-columns:1fr 1fr}.photos .wide{grid-column:1/-1}.photos .wide img{aspect-ratio:16/9}}
@@ -145,7 +150,7 @@ td small{color:var(--muted);font-family:var(--mono);font-size:.8rem}
 .line{display:flex;flex-direction:column;gap:4px}
 .line .eyebrow{color:var(--muted)}
 .line .v{font:500 1.1rem/1.3 var(--mono);user-select:all}
-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:28px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:28px}
 form .full{grid-column:1/-1}
 label{display:flex;flex-direction:column;gap:6px;font-size:.9rem;color:var(--muted)}
 input,select,textarea{font:400 1rem/1.4 var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:12px;width:100%}
@@ -172,6 +177,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
       <a href="#camps"><span class="en">Summer Camps</span><span class="es">Campamentos</span></a>
       <a href="#activities"><span class="en">Activities</span><span class="es">Actividades</span></a>
       <a href="#shows"><span class="en">Shows</span><span class="es">Shows</span></a>
+      <a href="#founder"><span class="en">Founder</span><span class="es">Fundador</span></a>
       <a href="#contact"><span class="en">Contact</span><span class="es">Contacto</span></a>
     </nav>
     <div class="lang" role="group" aria-label="Language">
@@ -190,7 +196,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
       <p class="lede"><span class="en">We design, install and train circus programs for hotels, resorts and summer camps. You get the structures, the equipment, a trained team and the safety procedures, and your guests get something they will remember.</span><span class="es">Diseñamos, instalamos y capacitamos programas de circo para hoteles, resorts y campamentos de verano. Tú recibes las estructuras, el equipo, un equipo capacitado y los procedimientos de seguridad, y tus huéspedes viven algo que van a recordar.</span></p>
       <div class="ctas">
         <a class="btn solid" href="https://calendar.app.google/Z9CcoSQE1W57XBmMA" target="_blank" rel="noopener"><span class="en">Book a call</span><span class="es">Agenda una llamada</span></a>
-        <a class="btn ghost" href="https://www.youtube.com/watch?v=GZs2b3kycds" target="_blank" rel="noopener"><span class="en">Watch our video</span><span class="es">Mira nuestro video</span></a>
+        <a class="btn ghost" href="#founder"><span class="en">Meet our founder</span><span class="es">Conoce al fundador</span></a>
       </div>
     </div>
     <figure class="hero-photo"><img src="img/duo-beach.jpg" width="1400" height="2087" alt="Two acrobats performing a hand-to-hand aerial act on a beach rig under palm trees"></figure>
@@ -347,7 +353,23 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-bet
   </div>
 </section>
 
-<section class="band" id="contact">
+<section class="band" id="founder">
+  <div class="wrap">
+    <div class="founder">
+      <div class="video">
+        <iframe src="https://www.youtube-nocookie.com/embed/GZs2b3kycds?rel=0" title="Interview with Miguel Arana, founder of Ares Entertainment, by Camp Shopping Channel" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="head">
+        <p class="eyebrow"><span class="en">Meet our founder</span><span class="es">Conoce a nuestro fundador</span></p>
+        <h2>Miguel Arana</h2>
+        <p class="lede"><span class="en">Miguel is an aerial and circus performer who founded Ares Entertainment to bring circus programs to hotels, resorts and camps. In this interview with Allison Miller of Camp Shopping Channel, he explains how a program works and why it matters for your guests and campers.</span><span class="es">Miguel es artista aéreo y de circo, y fundó Ares Entertainment para llevar programas de circo a hoteles, resorts y campamentos. En esta entrevista con Allison Miller de Camp Shopping Channel, explica cómo funciona un programa y por qué es importante para tus huéspedes y campistas.</span></p>
+        <p class="note"><span class="en">Interview in English.</span><span class="es">Entrevista en inglés.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="contact">
   <div class="wrap">
     <div class="contact">
       <div class="card">
