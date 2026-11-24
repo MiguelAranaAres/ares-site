@@ -80,6 +80,7 @@
   <button data-v="portor">Desde el portor</button>
   <button data-v="domo">Domo aéreo</button>
   <button data-v="entrada">Entrada</button>
+  <button data-v="lateral">Lateral</button>
   <button data-v="escenario">Escenario</button>
   <button data-v="aerea">Planta</button>
 </div>
@@ -570,6 +571,7 @@ const views = {
   domo:       { p:V(9, 4.5, 3.5), t:V(0, 5, dome.z) },
   aerea:      { p:V(0.01, 62, 0), t:V(0, 0, 0) },
   entrada:    { p:V(4.4, 3.2, -11), t:V(0, 1.6, -ROOM.l/2) },
+  lateral:    { p:V(-4, 3.6, -2.5), t:V(ROOM.w/2, 2.2, -2.5) },
   escenario:  { p:V(6.5, 4.2, 5.5), t:V(0, 4.5, ROOM.l/2 - 2) },
 };
 let camAnim = null;
