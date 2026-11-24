@@ -225,7 +225,7 @@ logoImg.onload = () => {
     g.fillStyle = '#5b4b50'; g.font = '400 36px Jost, sans-serif'; g.fillText('La Asunción · Nueva Esparta', 524, 430);
   });
   const b = new THREE.Mesh(new THREE.PlaneGeometry(10, 4.67), new THREE.MeshStandardMaterial({ map:t, roughness:.8 }));
-  b.position.set(0, 9.4, ROOM.l/2 - 0.05); b.rotation.y = Math.PI; b.scale.setScalar(.6); b.position.y = 10.4; wallGroup.add(b);
+  b.position.set(0, 9.4, ROOM.l/2 - 0.05); b.rotation.y = Math.PI; b.scale.setScalar(.5); b.position.set(0, 9.75, ROOM.l/2 - 5.1); wallGroup.add(b);
   const b2 = b.clone(); b2.scale.setScalar(1); b2.position.set(0, 9.4, -ROOM.l/2 + 0.05); b2.rotation.y = 0; wallGroup.add(b2);
 };
 // gold trim posts at corners
@@ -523,7 +523,7 @@ const views = {
   portor:     { p:V(.3, 7.4, zCatch + 1.4), t:V(0, 7.2, zFly - 3) },
   domo:       { p:V(9, 4.5, 3.5), t:V(0, 5, dome.z) },
   aerea:      { p:V(0.01, 62, 0), t:V(0, 0, 0) },
-  escenario:  { p:V(0, 6, -2), t:V(0, 4, ROOM.l/2 - 2) },
+  escenario:  { p:V(6.5, 4.2, 5.5), t:V(0, 4.5, ROOM.l/2 - 2) },
 };
 let camAnim = null;
 function goView(name) {
