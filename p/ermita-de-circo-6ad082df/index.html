@@ -79,6 +79,7 @@
   <button data-v="plataforma">Desde la plataforma</button>
   <button data-v="portor">Desde el portor</button>
   <button data-v="domo">Domo aéreo</button>
+  <button data-v="entrada">Entrada</button>
   <button data-v="escenario">Escenario</button>
   <button data-v="aerea">Planta</button>
 </div>
@@ -206,7 +207,34 @@ function addWall(len, x, z, rotY, tex) {
 }
 addWall(ROOM.l, -ROOM.w/2, 0,  Math.PI/2, wallTex(ROOM.l));
 addWall(ROOM.l,  ROOM.w/2, 0, -Math.PI/2, wallTex(ROOM.l));
-addWall(ROOM.w, 0, -ROOM.l/2, 0, wallTex(ROOM.w));
+// entrance wall behind the trapeze platform: three double doors (centre and either side), opening outwards
+const DOORS = [-8, 0, 8], DOOR_W = 2.4, DOOR_H = 3.0;
+{ const sh = new THREE.Shape(); sh.moveTo(-ROOM.w/2,0); sh.lineTo(ROOM.w/2,0); sh.lineTo(ROOM.w/2,ROOM.h); sh.lineTo(-ROOM.w/2,ROOM.h); sh.lineTo(-ROOM.w/2,0);
+  for (const dx of DOORS) { const h = new THREE.Path(); h.moveTo(dx-DOOR_W/2,0); h.lineTo(dx-DOOR_W/2,DOOR_H); h.lineTo(dx+DOOR_W/2,DOOR_H); h.lineTo(dx+DOOR_W/2,0); h.lineTo(dx-DOOR_W/2,0); sh.holes.push(h); }
+  const g = new THREE.ShapeGeometry(sh); const p = g.attributes.position, uv = g.attributes.uv;
+  for (let i=0;i<p.count;i++) uv.setXY(i, (p.getX(i)+ROOM.w/2)/ROOM.w, p.getY(i)/ROOM.h);
+  const w = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map:wallTex(ROOM.w), side:THREE.FrontSide, roughness:.9 }));
+  w.position.set(0, 0, -ROOM.l/2); w.receiveShadow = true; wallGroup.add(w);
+  // outside: plaza paving and daylight seen through the doorways
+  const plaza = new THREE.Mesh(new THREE.PlaneGeometry(ROOM.w, 4), mat(0xb9aa94, {roughness:1})); plaza.rotation.x = -Math.PI/2; plaza.position.set(0, .01, -ROOM.l/2 - 2); scene.add(plaza);
+  const sky = canvasTex(512, 128, (g,w,h) => { const gr = g.createLinearGradient(0,0,0,h); gr.addColorStop(0,'#bfe0f2'); gr.addColorStop(.7,'#fff1d6'); gr.addColorStop(.71,'#9fb07a'); gr.addColorStop(1,'#7f8f5c'); g.fillStyle = gr; g.fillRect(0,0,w,h); });
+  const out = new THREE.Mesh(new THREE.PlaneGeometry(ROOM.w, 8), new THREE.MeshBasicMaterial({ map:sky, side:THREE.FrontSide })); out.position.set(0, 3, -ROOM.l/2 - 4); scene.add(out);
+  const doorM = mat(C.magenta, {roughness:.5}), panelM = mat(C.cream);
+  for (const dx of DOORS) {
+    // gold frame on the inside face
+    wallGroup.add(box(DOOR_W+.36, .18, .08, M.gold, dx, DOOR_H+.09, -ROOM.l/2+.04));
+    for (const sd of [-1,1]) wallGroup.add(box(.18, DOOR_H, .08, M.gold, dx + sd*(DOOR_W/2+.09), DOOR_H/2, -ROOM.l/2+.04));
+    // two leaves hinged at the jambs, swung 70° outwards
+    for (const sd of [-1,1]) {
+      const pivot = new THREE.Group(); pivot.position.set(dx + sd*DOOR_W/2, 0, -ROOM.l/2 - .03);
+      const leaf = new THREE.Group(); leaf.position.x = -sd*DOOR_W/4;
+      leaf.add(box(DOOR_W/2 - .02, DOOR_H - .02, .06, doorM, 0, DOOR_H/2, 0));
+      for (const py of [.85, 2.1]) leaf.add(box(DOOR_W/2 - .3, .9, .075, panelM, 0, py, 0));
+      leaf.add(box(.04, .35, .1, M.gold, sd*(DOOR_W/4 - .1), 1.05, 0));
+      pivot.add(leaf); pivot.rotation.y = -sd * 70*Math.PI/180; wallGroup.add(pivot);
+    }
+  }
+}
 // end wall behind dome with banner
 const endTex = canvasTex(1000, 480, (g,w,h) => {
   g.fillStyle = css(C.cream); g.fillRect(0,0,w,h);
@@ -454,6 +482,7 @@ label('Portor', V(0, yCatchPivot+.5, zCatch), true);
 label('Domo aéreo · telas', V(0, ringY+.9, dome.z), true);
 label('Público', V(8.5, 2.6, -11 + RIG_OFF), true);
 label('Escenario', V(0, 2.2, ROOM.l/2 - 3), true);
+label('Entradas', V(0, 3.6, -ROOM.l/2 + .5), true);
 
 // ---------- Act animation ----------
 const g = 9.81;
@@ -523,6 +552,7 @@ const views = {
   portor:     { p:V(.3, 7.4, zCatch + 1.4), t:V(0, 7.2, zFly - 3) },
   domo:       { p:V(9, 4.5, 3.5), t:V(0, 5, dome.z) },
   aerea:      { p:V(0.01, 62, 0), t:V(0, 0, 0) },
+  entrada:    { p:V(4, 4.5, -9), t:V(0, 2, -ROOM.l/2) },
   escenario:  { p:V(6.5, 4.2, 5.5), t:V(0, 4.5, ROOM.l/2 - 2) },
 };
 let camAnim = null;
