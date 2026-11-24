@@ -207,9 +207,16 @@ function addWall(len, x, z, rotY, tex) {
 }
 // walls with double doors opening outwards: one centred on the entrance wall behind the trapeze platform,
 // and one in the middle of each side wall
-const DOOR_W = 2.4, DOOR_H = 3.0;
+const DOOR_W = 2.8, DOOR_H = 3.6;
 const skyTex = canvasTex(512, 128, (g,w,h) => { const gr = g.createLinearGradient(0,0,0,h); gr.addColorStop(0,'#bfe0f2'); gr.addColorStop(.7,'#fff1d6'); gr.addColorStop(.71,'#9fb07a'); gr.addColorStop(1,'#7f8f5c'); g.fillStyle = gr; g.fillRect(0,0,w,h); });
-const doorM = mat(C.magenta, {roughness:.5}), panelM = mat(C.cream);
+const woodTex = canvasTex(256, 512, (g,w,h) => {
+  g.fillStyle = '#6a3f22'; g.fillRect(0,0,w,h);
+  for (let x=0; x<w; x+=64) { g.fillStyle = 'rgba(0,0,0,.35)'; g.fillRect(x,0,3,h); }          // plank joints
+  for (let i=0;i<220;i++){ const x = Math.random()*w; g.strokeStyle = `rgba(${Math.random()<.5?'40,20,8':'140,90,50'},.25)`; g.lineWidth = 1+Math.random()*2;
+    g.beginPath(); g.moveTo(x,0); g.bezierCurveTo(x+6,h*.3,x-6,h*.6,x+3,h); g.stroke(); }                     // grain
+});
+const doorM = new THREE.MeshStandardMaterial({ map:woodTex, roughness:.7, metalness:0 });
+const panelM = new THREE.MeshStandardMaterial({ map:woodTex, color:0xc9a27e, roughness:.75 });
 function doorWall(len, x, z, rotY, tex, doors) {
   const G = new THREE.Group();   // local frame: wall in the z=0 plane facing +z (inside), outside is -z
   const sh = new THREE.Shape(); sh.moveTo(-len/2,0); sh.lineTo(len/2,0); sh.lineTo(len/2,ROOM.h); sh.lineTo(-len/2,ROOM.h); sh.lineTo(-len/2,0);
@@ -222,22 +229,27 @@ function doorWall(len, x, z, rotY, tex, doors) {
     const plaza = new THREE.Mesh(new THREE.PlaneGeometry(7, 4), mat(0xb9aa94, {roughness:1})); plaza.rotation.x = -Math.PI/2; plaza.position.set(dx, .01, -2); G.add(plaza);
     const out = new THREE.Mesh(new THREE.PlaneGeometry(7, 8), new THREE.MeshBasicMaterial({ map:skyTex })); out.position.set(dx, 3, -4); G.add(out);
     // gold frame on the inside face
-    G.add(box(DOOR_W+.36, .18, .08, M.gold, dx, DOOR_H+.09, .04));
-    for (const sd of [-1,1]) G.add(box(.18, DOOR_H, .08, M.gold, dx + sd*(DOOR_W/2+.09), DOOR_H/2, .04));
+    G.add(box(DOOR_W+.6, .2, .1, M.gold, dx, DOOR_H+.1, .05));
+    for (const sd of [-1,1]) G.add(box(.3, DOOR_H, .1, M.gold, dx + sd*(DOOR_W/2+.15), DOOR_H/2, .05));
+    // ochre arch moulding above the door, as on the building's facade
+    const arch = new THREE.Mesh(new THREE.TorusGeometry(DOOR_W/2 - .1, .09, 8, 32, Math.PI), M.gold); arch.position.set(dx, DOOR_H + .2, .06); G.add(arch);
+    // wooden threshold step
+    G.add(box(DOOR_W+.6, .12, .5, doorM, dx, .06, -.25));
     // two leaves hinged at the jambs, swung 70° outwards
     for (const sd of [-1,1]) {
       const pivot = new THREE.Group(); pivot.position.set(dx + sd*DOOR_W/2, 0, -.03);
       const leaf = new THREE.Group(); leaf.position.x = -sd*DOOR_W/4;
-      leaf.add(box(DOOR_W/2 - .02, DOOR_H - .02, .06, doorM, 0, DOOR_H/2, 0));
-      for (const py of [.85, 2.1]) leaf.add(box(DOOR_W/2 - .3, .9, .075, panelM, 0, py, 0));
-      leaf.add(box(.04, .35, .1, M.gold, sd*(DOOR_W/4 - .1), 1.05, 0));
+      leaf.add(box(DOOR_W/2 - .02, DOOR_H - .02, .08, doorM, 0, DOOR_H/2, 0));
+      for (const py of [1.0, 2.55]) leaf.add(box(DOOR_W/2 - .34, 1.15, .1, panelM, 0, py, 0));
+      leaf.add(box(.05, .4, .12, M.gold, sd*(DOOR_W/4 - .12), 1.15, 0));
       pivot.add(leaf); pivot.rotation.y = -sd * 70*Math.PI/180; G.add(pivot);
     }
   }
   G.position.set(x, 0, z); G.rotation.y = rotY; wallGroup.add(G); return G;
 }
-doorWall(ROOM.l, -ROOM.w/2, 0,  Math.PI/2, wallTex(ROOM.l), [0]);
-doorWall(ROOM.l,  ROOM.w/2, 0, -Math.PI/2, wallTex(ROOM.l), [0]);
+// side doors at z = -10 (beside the trapeze bleachers) and z = +5 (beside the curved bleachers)
+doorWall(ROOM.l, -ROOM.w/2, 0,  Math.PI/2, wallTex(ROOM.l), [10, -5]);   // local x = -z on this wall
+doorWall(ROOM.l,  ROOM.w/2, 0, -Math.PI/2, wallTex(ROOM.l), [-10, 5]);   // local x = z on this wall
 doorWall(ROOM.w, 0, -ROOM.l/2, 0, wallTex(ROOM.w), [0]);
 // end wall behind dome with banner
 const endTex = canvasTex(1000, 480, (g,w,h) => {
@@ -486,9 +498,8 @@ label('Portor', V(0, yCatchPivot+.5, zCatch), true);
 label('Domo aéreo · telas', V(0, ringY+.9, dome.z), true);
 label('Público', V(8.5, 2.6, -11 + RIG_OFF), true);
 label('Escenario', V(0, 2.2, ROOM.l/2 - 3), true);
-label('Entrada', V(0, 3.6, -ROOM.l/2 + .5), true);
-label('Entrada', V(-ROOM.w/2 + .5, 3.6, 0), true);
-label('Entrada', V(ROOM.w/2 - .5, 3.6, 0), true);
+label('Entrada principal', V(0, 4.2, -ROOM.l/2 + .5), true);
+for (const sx of [-1,1]) for (const z of [-10, 5]) label('Entrada', V(sx*(ROOM.w/2 - .5), 4.2, z), true);
 
 // ---------- Act animation ----------
 const g = 9.81;
