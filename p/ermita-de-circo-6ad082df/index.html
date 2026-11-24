@@ -79,6 +79,7 @@
   <button data-v="plataforma">Desde la plataforma</button>
   <button data-v="portor">Desde el portor</button>
   <button data-v="domo">Domo aéreo</button>
+  <button data-v="escenario">Escenario</button>
   <button data-v="aerea">Planta</button>
 </div>
 <div id="hint">Arrastra para girar · rueda o pellizco para acercar · clic derecho o dos dedos para desplazar</div>
@@ -92,7 +93,8 @@ const C = { cream:0xF6EEDF, cream2:0xEADBC3, magenta:0xA51C6A, magentaD:0x7E1450
 
 // ---------- Rig geometry (metres) — Full-sized bar-to-catcher, flying-trapeze.com infosheet ----------
 const R = { frameW:3.80, J:9.75, A:4.65, B:4.30, Cdist:7.98, D:2.75, F:3.65, G:2.45, H:0.60, I:7.93, K:2.50, bar:0.90 };
-const zPlat = -21;                    // platform frame
+const RIG_OFF = 2.5;                  // rig moved 2.5 m toward the dome
+const zPlat = -21 + RIG_OFF;          // platform frame
 const zFly  = zPlat + R.A;            // fly frame  (-16.35)
 const zCatch = zFly + R.Cdist;        // catch frame (-8.37)
 const zApron = zCatch + R.I;          // end of net (-0.44)
@@ -223,8 +225,8 @@ logoImg.onload = () => {
     g.fillStyle = '#5b4b50'; g.font = '400 36px Jost, sans-serif'; g.fillText('La Asunción · Nueva Esparta', 524, 430);
   });
   const b = new THREE.Mesh(new THREE.PlaneGeometry(10, 4.67), new THREE.MeshStandardMaterial({ map:t, roughness:.8 }));
-  b.position.set(0, 9.4, ROOM.l/2 - 0.05); b.rotation.y = Math.PI; wallGroup.add(b);
-  const b2 = b.clone(); b2.position.set(0, 9.4, -ROOM.l/2 + 0.05); b2.rotation.y = 0; wallGroup.add(b2);
+  b.position.set(0, 9.4, ROOM.l/2 - 0.05); b.rotation.y = Math.PI; b.scale.setScalar(.6); b.position.y = 10.4; wallGroup.add(b);
+  const b2 = b.clone(); b2.scale.setScalar(1); b2.position.set(0, 9.4, -ROOM.l/2 + 0.05); b2.rotation.y = 0; wallGroup.add(b2);
 };
 // gold trim posts at corners
 for (const [x,z] of [[-12.5,-25],[12.5,-25],[-12.5,25],[12.5,25]]) wallGroup.add(box(.4, ROOM.h, .4, M.gold, x*0.992, ROOM.h/2, z*0.996));
@@ -369,12 +371,56 @@ domeMat.position.set(0,.03,dome.z); domeMat.receiveShadow = true; domeG.add(dome
 function bleachers(x, dir) {
   const g = new THREE.Group();
   for (let r=0;r<4;r++) {
-    g.add(box(1, .45*(r+1), 20, r%2? M.cream : M.magenta, x + dir*(r*1), .225*(r+1), -11));
-    g.add(box(1, .06, 20, M.gold, x + dir*(r*1), .45*(r+1)+.03, -11));
+    g.add(box(1, .45*(r+1), 20, r%2? M.cream : M.magenta, x + dir*(r*1), .225*(r+1), -11 + RIG_OFF));
+    g.add(box(1, .06, 20, M.gold, x + dir*(r*1), .45*(r+1)+.03, -11 + RIG_OFF));
   }
   return g;
 }
 scene.add(bleachers(6.5, 1), bleachers(-6.5, -1));
+// curved bleachers wrapping the front of the aerial dome, facing the dome and the stage
+function arcRow(r0, r1, a0, a1, h, m) {
+  const sh = new THREE.Shape(), n = 32;
+  for (let i=0;i<=n;i++){ const a = a0 + (a1-a0)*i/n; const p = [r1*Math.sin(a), r1*Math.cos(a)]; i ? sh.lineTo(...p) : sh.moveTo(...p); }
+  for (let i=n;i>=0;i--){ const a = a0 + (a1-a0)*i/n; sh.lineTo(r0*Math.sin(a), r0*Math.cos(a)); }
+  const mesh = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth:h, bevelEnabled:false, curveSegments:32 }), m);
+  mesh.rotation.x = -Math.PI/2; mesh.position.set(0, 0, dome.z); mesh.castShadow = mesh.receiveShadow = true; return mesh;
+}
+{ const g = new THREE.Group(), gap = 20*Math.PI/180, end = 105*Math.PI/180;
+  for (const sd of [-1,1]) for (let i=0;i<4;i++) {
+    const r0 = 7.5 + i, h = .45*(i+1), a0 = sd > 0 ? gap : -end, a1 = sd > 0 ? end : -gap;
+    g.add(arcRow(r0, r0+1, a0, a1, h, i%2 ? M.cream : M.magenta));
+    const trim = arcRow(r0, r0+.08, a0, a1, .06, M.gold); trim.position.y = h; g.add(trim);
+  }
+  scene.add(g); }
+
+// ---------- Theatre stage on the end wall behind the dome ----------
+{ const st = new THREE.Group(), W = 16, D = 5, H = 1.0, z0 = ROOM.l/2 - D;
+  st.add(box(W, H, D, mat(0x5a3a28, {roughness:.7}), 0, H/2, z0 + D/2));                 // deck
+  st.add(box(W+.1, H, .08, M.magenta, 0, H/2, z0 - .04));                               // fascia
+  st.add(box(W+.1, .07, .1, M.gold, 0, H - .03, z0 - .06));
+  for (let i=0;i<4;i++) st.add(box(3, .25, .35, mat(0x5a3a28), 0, .125 + i*.25, z0 - .35*(4-i)));  // centre steps
+  // painted backdrop (escenario)
+  const bd = canvasTex(1024, 512, (g,w,h) => {
+    const sky = g.createLinearGradient(0,0,0,h); sky.addColorStop(0,'#3b1f4a'); sky.addColorStop(.55,'#c2306f'); sky.addColorStop(.85,'#f7aa3f'); g.fillStyle = sky; g.fillRect(0,0,w,h);
+    g.fillStyle = '#5e2a4f'; g.beginPath(); g.moveTo(0,h*.78); for (let x=0;x<=w;x+=8) g.lineTo(x, h*.70 - 60*Math.sin(x/170) - 30*Math.sin(x/61)); g.lineTo(w,h); g.lineTo(0,h); g.fill();
+    // colonial chapel silhouette (Ermita)
+    const cx = w/2, by = h*.86; g.fillStyle = '#f6eedf';
+    g.fillRect(cx-150, by-150, 300, 150); g.beginPath(); g.moveTo(cx-170,by-150); g.lineTo(cx,by-230); g.lineTo(cx+170,by-150); g.fill();
+    g.fillRect(cx+110, by-270, 70, 270); g.beginPath(); g.moveTo(cx+100,by-270); g.lineTo(cx+145,by-320); g.lineTo(cx+190,by-270); g.fill();
+    g.fillStyle = '#a6215f'; g.beginPath(); g.arc(cx, by-50, 38, Math.PI, 0); g.fillRect(cx-38, by-50, 76, 50); g.fill();
+    g.fillStyle = '#c99a2e'; g.fillRect(cx+130, by-235, 30, 40);
+    g.fillStyle = '#7a3a2a'; g.fillRect(0, by, w, h-by);
+  });
+  const back = new THREE.Mesh(new THREE.PlaneGeometry(13, 7), new THREE.MeshStandardMaterial({ map:bd, roughness:.95 }));
+  back.position.set(0, H + 3.5, ROOM.l/2 - .3); back.rotation.y = Math.PI; st.add(back);
+  // black curtains: side legs and top border
+  const velvet = canvasTex(256, 64, (g,w,h) => { for (let x=0;x<w;x++){ const v = 14 + 16*(.5+.5*Math.sin(x/5)); g.fillStyle = `rgb(${v},${v},${v+2})`; g.fillRect(x,0,1,h); } }, [3,1]);
+  const curtainM = new THREE.MeshStandardMaterial({ map:velvet, roughness:1, side:THREE.DoubleSide });
+  for (const sd of [-1,1]) for (const [dz, off] of [[.6, 6.6], [2.2, 6.9], [3.8, 7.2]]) {
+    const leg = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 7.6), curtainM); leg.position.set(sd*off, H + 3.8, z0 + dz); leg.rotation.y = Math.PI; st.add(leg); }
+  const border = new THREE.Mesh(new THREE.PlaneGeometry(W, 1.4), curtainM); border.position.set(0, H + 7.2, z0 + .3); border.rotation.y = Math.PI; st.add(border);
+  st.add(box(W, .08, .08, M.gold, 0, H + 6.5, z0 + .25));
+  scene.add(st); }
 
 // ---------- Dimension labels ----------
 const dims = new THREE.Group(); scene.add(dims);
@@ -406,7 +452,8 @@ label('Plataforma', V(0, yPlat+.4, zPlatFront-.5), true);
 label('Barra de vuelo', V(0, yFlyPivot-R.F-.35, zFly), true);
 label('Portor', V(0, yCatchPivot+.5, zCatch), true);
 label('Domo aéreo · telas', V(0, ringY+.9, dome.z), true);
-label('Público', V(8.5, 2.6, -11), true);
+label('Público', V(8.5, 2.6, -11 + RIG_OFF), true);
+label('Escenario', V(0, 2.2, ROOM.l/2 - 3), true);
 
 // ---------- Act animation ----------
 const g = 9.81;
@@ -471,11 +518,12 @@ function update(t) {
 // ---------- Camera views ----------
 const views = {
   general:    { p:V(-22, 15, -30), t:V(0, 5, -8) },
-  publico:    { p:V(9.2, 3.4, -6), t:V(0, 6.5, -12) },
+  publico:    { p:V(9.2, 3.4, -6 + RIG_OFF), t:V(0, 6.5, -12 + RIG_OFF) },
   plataforma: { p:V(0, 8.75, zPlatFront - .7), t:V(0, 6.6, zCatch) },
   portor:     { p:V(.3, 7.4, zCatch + 1.4), t:V(0, 7.2, zFly - 3) },
   domo:       { p:V(9, 4.5, 3.5), t:V(0, 5, dome.z) },
-  aerea:      { p:V(0.01, 62, -3), t:V(0, 0, -3) },
+  aerea:      { p:V(0.01, 62, 0), t:V(0, 0, 0) },
+  escenario:  { p:V(0, 6, -2), t:V(0, 4, ROOM.l/2 - 2) },
 };
 let camAnim = null;
 function goView(name) {
